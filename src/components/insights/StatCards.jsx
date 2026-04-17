@@ -48,13 +48,46 @@ function StatCards({ data = [], currency = 'USD' }) {
         <div key={card.label} className="col-6 col-md-3">
           <div
             className="stat-card h-100"
-            style={{ borderLeft: `4px solid ${card.color}` }}
+            style={{
+              borderLeft: `4px solid ${card.color}`,
+              background: `linear-gradient(135deg, ${card.color}08 0%, #ffffff 60%)`,
+            }}
           >
-            <div className="stat-label">{card.label}</div>
-            <div className="stat-value" style={{ color: card.color }}>
+            <div
+              className="stat-label"
+              style={{
+                fontSize: '11px',
+                fontWeight: '700',
+                letterSpacing: '0.08em',
+                color: card.color,
+                marginBottom: '0.5rem'
+              }}
+            >
+              {card.label}
+            </div>
+            <div
+              className="stat-value"
+              style={{
+                color: card.color,
+                fontSize: '28px',
+                fontWeight: '800',
+                letterSpacing: '-0.5px',
+                lineHeight: '1.1',
+                marginBottom: '0.4rem'
+              }}
+            >
               {card.value}
             </div>
-            <div className="stat-sub">{card.sub}</div>
+            <div
+              className="stat-sub"
+              style={{
+                fontSize: '12px',
+                color: '#6c757d',
+                fontWeight: '500'
+              }}
+            >
+              {card.sub}
+            </div>
           </div>
         </div>
       ))}
