@@ -5,6 +5,7 @@ import {
   flexRender,
 } from '@tanstack/react-table'
 import { formatSalary, formatDate, getInitials, getEmploymentTypeBadge } from '../../utils/salaryFormatter'
+import { getCountryName } from '../../utils/countryNames'
 
 function EmployeeTable({ employees, onEdit, onDelete, isLoading }) {
   const columns = useMemo(() => [
@@ -47,7 +48,7 @@ function EmployeeTable({ employees, onEdit, onDelete, isLoading }) {
       accessorKey: 'country',
       cell: ({ row }) => (
         <div>
-          <div style={{ fontSize: '14px' }}>{row.original.country}</div>
+          <div style={{ fontSize: '14px' }}>{getCountryName(row.original.country)}</div>
           <div className="text-muted" style={{ fontSize: '12px' }}>{row.original.city || '—'}</div>
         </div>
       )

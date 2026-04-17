@@ -7,6 +7,8 @@ import EmployeeModal from '../components/employees/EmployeeModal'
 import DeleteConfirmModal from '../components/employees/DeleteConfirmModal'
 import ErrorAlert from '../components/shared/ErrorAlert'
 import { useDebounce } from '../hooks/useDebounce'
+import { useCountries } from '../hooks/useMeta'
+import { getCountryName } from '../utils/countryNames'
 
 function EmployeesPage() {
   const [page, setPage] = useState(1)
@@ -16,7 +18,6 @@ function EmployeesPage() {
   const [selectedEmployee, setSelected] = useState(null)
   const [deleteTarget, setDeleteTarget] = useState(null)
   const [showModal, setShowModal] = useState(false)
-
   const debouncedSearch = useDebounce(search, 300)
 
   const { data, isLoading, isError } = useEmployees({
@@ -26,6 +27,7 @@ function EmployeesPage() {
     department_id: deptFilter,
   })
 
+  const { data: countriesData } = useCountries()
   const { data: deptData } = useQuery({ queryKey: ['departments'], queryFn: getDepartments })
   const { data: titleData } = useQuery({ queryKey: ['job_titles'], queryFn: getJobTitles })
 
@@ -121,8 +123,8 @@ function EmployeesPage() {
                 onChange={e => { setCountry(e.target.value); setPage(1) }}
               >
                 <option value="">All countries</option>
-                {['US', 'GB', 'IN', 'DE', 'FR', 'CA', 'AU', 'SG', 'JP'].map(c => (
-                  <option key={c} value={c}>{c}</option>
+                {countriesData?.countries?.map(c => (
+                  <option key={c} value={c}>{getCountryName(c)}</option>
                 ))}
               </select>
             </div>

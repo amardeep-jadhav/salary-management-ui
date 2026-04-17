@@ -9,6 +9,7 @@ import TopRolesTable from '../components/insights/TopRolesTable'
 import RecentHiresTable from '../components/insights/RecentHiresTable'
 import LoadingSpinner from '../components/shared/LoadingSpinner'
 import ErrorAlert from '../components/shared/ErrorAlert'
+import { getCountryName } from '../utils/countryNames'
 
 function InsightsPage() {
   const [country, setCountry] = useState('')
@@ -35,7 +36,7 @@ function InsightsPage() {
         >
           <option value="">All countries</option>
           {countriesData?.countries?.map(c => (
-            <option key={c} value={c}>{c}</option>
+            <option key={c} value={c}>{getCountryName(c)}</option>
           ))}
         </select>
       </div>
