@@ -86,6 +86,6 @@ describe('useDeleteEmployee', () => {
     result.current.mutate('1')
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(employeesApi.deleteEmployee).toHaveBeenCalledWith('1')
+    expect(employeesApi.deleteEmployee).toHaveBeenCalledWith('1', expect.anything())
   })
 })
