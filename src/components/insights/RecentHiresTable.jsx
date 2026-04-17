@@ -1,4 +1,5 @@
 import { formatDate, getInitials } from '../../utils/salaryFormatter'
+import { getCountryName } from '../../utils/countryNames'
 
 function RecentHiresTable({ data = [] }) {
   if (!data.length) {
@@ -40,7 +41,7 @@ function RecentHiresTable({ data = [] }) {
                   </div>
                 </td>
                 <td style={{ fontSize: '12px', color: '#6c757d' }}>{hire.job_title}</td>
-                <td style={{ fontSize: '12px' }}>{hire.country}</td>
+                <td style={{ fontSize: '12px' }}>{getCountryName(hire.country)}</td>
                 <td>
                   <span className="badge bg-success bg-opacity-10 text-success" style={{ fontSize: '11px' }}>
                     {formatDate(hire.hired_on)}
