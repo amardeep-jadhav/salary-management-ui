@@ -1,13 +1,14 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Modal } from 'bootstrap'
 import { employeeSchema } from '../../schemas/employeeSchema'
 
-function EmployeeModal({ employee, departments, jobTitles, onSubmit, onCancel, isLoading }) {
+function EmployeeModal({ employee, departments, jobTitles, onSubmit, onCancel, isLoading, serverError: externalError }) {
   const modalRef = useRef(null)
   const bsModal = useRef(null)
   const isEdit = !!employee?.id
+  const [serverError, setServerError] = useState(null)
 
   const {
     register,
@@ -24,7 +25,12 @@ function EmployeeModal({ employee, departments, jobTitles, onSubmit, onCancel, i
   }, [])
 
   useEffect(() => {
+    if (externalError) setServerError(externalError)
+  }, [externalError])
+
+  useEffect(() => {
     if (employee !== null) {
+      setServerError(null)
       reset(employee?.id ? {
         ...employee,
         salary: Number(employee.salary),
@@ -66,7 +72,7 @@ function EmployeeModal({ employee, departments, jobTitles, onSubmit, onCancel, i
 
   return (
     <div className="modal fade" ref={modalRef} tabIndex="-1">
-      <div className="modal-dialog modal-lg modal-dialog-scrollable">
+      <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title fw-semibold">
@@ -79,6 +85,20 @@ function EmployeeModal({ employee, departments, jobTitles, onSubmit, onCancel, i
             />
           </div>
           <div className="modal-body">
+            {serverError && (
+              <div className="alert alert-danger alert-dismissible d-flex align-items-center gap-2" role="alert">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style={{ flexShrink: 0 }}>
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                  <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+                </svg>
+                <div style={{ fontSize: '13px' }}>{serverError}</div>
+                <button
+                  type="button"
+                  className="btn-close ms-auto"
+                  onClick={() => setServerError(null)}
+                />
+              </div>
+            )}
             <form id="employee-form" onSubmit={handleSubmit(onFormSubmit)}>
               <div className="row g-3">
                 <div className="col-md-6">

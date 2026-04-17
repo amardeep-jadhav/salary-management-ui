@@ -11,6 +11,7 @@ import { useCountries } from '../hooks/useMeta'
 import { getCountryName } from '../utils/countryNames'
 
 function EmployeesPage() {
+  const [modalError, setModalError] = useState(null)
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
   const [countryFilter, setCountry] = useState('')
@@ -52,16 +53,20 @@ function EmployeesPage() {
   const handleModalClose = () => {
     setSelected(null)
     setShowModal(false)
+    setModalError(null)
   }
 
   const handleSubmit = (data) => {
+    setModalError(null)
     if (data.id) {
       updateEmployee.mutate(data, {
-        onSuccess: () => handleModalClose()
+        onSuccess: () => handleModalClose(),
+        onError: (err) => setModalError(err.message)
       })
     } else {
       createEmployee.mutate(data, {
-        onSuccess: () => handleModalClose()
+        onSuccess: () => handleModalClose(),
+        onError: (err) => setModalError(err.message)
       })
     }
   }
@@ -197,6 +202,7 @@ function EmployeesPage() {
           onSubmit={handleSubmit}
           onCancel={handleModalClose}
           isLoading={createEmployee.isPending || updateEmployee.isPending}
+          serverError={modalError}
         />
       )}
 
