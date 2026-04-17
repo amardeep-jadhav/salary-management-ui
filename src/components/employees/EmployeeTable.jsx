@@ -15,13 +15,20 @@ function EmployeeTable({ employees, onEdit, onDelete, isLoading }) {
       cell: ({ row }) => {
         const emp = row.original
         const initials = getInitials(emp.full_name)
-        const colors = ['#4f8ef7', '#f7654f', '#4fc9f7', '#a84ff7', '#f7a84f']
+        const colors = ['#4f8ef7', '#f7654f', '#4fc9a4', '#a84ff7', '#f7a84f']
         const color = colors[emp.full_name.charCodeAt(0) % colors.length]
         return (
           <div className="d-flex align-items-center gap-2">
             <div
               className="avatar"
-              style={{ background: color + '20', color: color }}
+              style={{
+                background: color + '20',
+                color: color,
+                width: '32px',
+                height: '32px',
+                fontSize: '12px',
+                fontWeight: '600',
+              }}
             >
               {initials}
             </div>
