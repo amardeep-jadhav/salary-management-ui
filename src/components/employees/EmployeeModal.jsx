@@ -55,9 +55,12 @@ function EmployeeModal({ employee, departments, jobTitles, onSubmit, onCancel, i
     }
   }
 
-  const Field = ({ name, label, type = 'text', placeholder }) => (
+  const Field = ({ name, label, type = 'text', placeholder, required = false }) => (
     <div className="mb-3">
-      <label className="form-label fw-medium" style={{ fontSize: '13px' }}>{label}</label>
+      <label className="form-label fw-medium" style={{ fontSize: '13px' }}>
+        {label}
+        {required && <span style={{ color: '#dc3545', marginLeft: '3px' }}>*</span>}
+      </label>
       <input
         type={type}
         className={`form-control ${errors[name] ? 'is-invalid' : ''}`}
@@ -102,10 +105,10 @@ function EmployeeModal({ employee, departments, jobTitles, onSubmit, onCancel, i
             <form id="employee-form" onSubmit={handleSubmit(onFormSubmit)}>
               <div className="row g-3">
                 <div className="col-md-6">
-                  <Field name="full_name" label="Full name" placeholder="John Smith" />
+                  <Field name="full_name" label="Full name" placeholder="John Smith" required />
                 </div>
                 <div className="col-md-6">
-                  <Field name="email" label="Email" type="email" placeholder="john@company.com" />
+                  <Field name="email" label="Email" type="email" placeholder="john@company.com" required />
                 </div>
                 <div className="col-md-6">
                   <Field name="phone" label="Phone" placeholder="+1 555 000 0000" />
@@ -123,14 +126,14 @@ function EmployeeModal({ employee, departments, jobTitles, onSubmit, onCancel, i
                   </div>
                 </div>
                 <div className="col-md-6">
-                  <Field name="country" label="Country" placeholder="US" />
+                  <Field name="country" label="Country" placeholder="US" required />
                 </div>
                 <div className="col-md-6">
                   <Field name="city" label="City" placeholder="New York" />
                 </div>
                 <div className="col-md-6">
                   <div className="mb-3">
-                    <label className="form-label fw-medium" style={{ fontSize: '13px' }}>Department</label>
+                    <label className="form-label fw-medium" style={{ fontSize: '13px' }}>Department <span style={{ color: '#dc3545' }}>*</span></label>
                     <select
                       className={`form-select ${errors.department_id ? 'is-invalid' : ''}`}
                       {...register('department_id')}
@@ -147,7 +150,7 @@ function EmployeeModal({ employee, departments, jobTitles, onSubmit, onCancel, i
                 </div>
                 <div className="col-md-6">
                   <div className="mb-3">
-                    <label className="form-label fw-medium" style={{ fontSize: '13px' }}>Job title</label>
+                    <label className="form-label fw-medium" style={{ fontSize: '13px' }}>Job title <span style={{ color: '#dc3545' }}>*</span></label>
                     <select
                       className={`form-select ${errors.job_title_id ? 'is-invalid' : ''}`}
                       {...register('job_title_id')}
@@ -164,7 +167,7 @@ function EmployeeModal({ employee, departments, jobTitles, onSubmit, onCancel, i
                 </div>
                 <div className="col-md-4">
                   <div className="mb-3">
-                    <label className="form-label fw-medium" style={{ fontSize: '13px' }}>Employment type</label>
+                    <label className="form-label fw-medium" style={{ fontSize: '13px' }}>Employment type <span style={{ color: '#dc3545' }}>*</span></label>
                     <select
                       className={`form-select ${errors.employment_type ? 'is-invalid' : ''}`}
                       {...register('employment_type')}
