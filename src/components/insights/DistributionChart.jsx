@@ -22,8 +22,13 @@ function DistributionChart({ data = [] }) {
         <YAxis tick={{ fontSize: 12 }} />
         <Tooltip
           formatter={(value) => [value.toLocaleString(), 'Employees']}
+          cursor={{ fill: 'transparent' }}
         />
-        <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+        <Bar
+          dataKey="count"
+          radius={[4, 4, 0, 0]}
+          activeBar={{ stroke: '#1a1f2e', strokeWidth: 1.5, fillOpacity: 0.85 }}
+        >
           {data.map((_, index) => (
             <Cell key={index} fill={COLORS[index % COLORS.length]} />
           ))}

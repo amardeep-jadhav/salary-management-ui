@@ -35,8 +35,13 @@ function HeadcountChart({ data = [] }) {
         />
         <Tooltip
           formatter={(value) => [value.toLocaleString(), 'Employees']}
+          cursor={{ fill: 'transparent' }}
         />
-        <Bar dataKey="headcount" radius={[0, 4, 4, 0]}>
+        <Bar
+          dataKey="headcount"
+          radius={[0, 4, 4, 0]}
+          activeBar={{ stroke: '#1a1f2e', strokeWidth: 1.5, fillOpacity: 0.85 }}
+        >
           {data.map((_, index) => (
             <Cell key={index} fill={COLORS[index % COLORS.length]} />
           ))}

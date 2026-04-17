@@ -57,8 +57,15 @@ function SalaryChart({ data = [] }) {
           tick={{ fontSize: 11 }}
           tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
         />
-        <Tooltip content={<CustomTooltip />} />
-        <Bar dataKey="avg_salary" radius={[4, 4, 0, 0]}>
+        <Tooltip
+          content={<CustomTooltip />}
+          cursor={{ fill: 'transparent' }}
+        />
+        <Bar
+          dataKey="avg_salary"
+          radius={[4, 4, 0, 0]}
+          activeBar={{ stroke: '#1a1f2e', strokeWidth: 1.5, fillOpacity: 0.85 }}
+        >
           {chartData.map((_, index) => (
             <Cell key={index} fill={COLORS[index % COLORS.length]} />
           ))}
