@@ -1,6 +1,6 @@
 import { formatSalary } from '../../utils/salaryFormatter'
 
-function TopRolesTable({ data = [] }) {
+function TopRolesTable({ data = [], currency = 'USD' }) {
   if (!data.length) return null
 
   return (
@@ -31,7 +31,7 @@ function TopRolesTable({ data = [] }) {
               </td>
               <td style={{ fontSize: '13px', fontWeight: '500' }}>{role.job_title}</td>
               <td style={{ fontSize: '13px', textAlign: 'right', fontWeight: '600', color: '#1a1f2e' }}>
-                {formatSalary(role.avg_salary, 'USD')}
+                {formatSalary(role.avg_salary, currency)}
               </td>
             </tr>
           ))}

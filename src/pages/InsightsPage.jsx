@@ -67,7 +67,10 @@ function InsightsPage() {
               <p className="text-muted mb-3" style={{ fontSize: '12px' }}>
                 Highest average compensation
               </p>
-              <TopRolesTable data={data?.top_paid_roles} />
+              <TopRolesTable
+                data={data?.top_paid_roles}
+                currency={country ? getCountryCurrency(country) : 'USD'}
+              />
             </div>
           </div>
         </div>
