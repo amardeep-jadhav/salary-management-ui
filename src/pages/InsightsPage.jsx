@@ -10,6 +10,7 @@ import RecentHiresTable from '../components/insights/RecentHiresTable'
 import LoadingSpinner from '../components/shared/LoadingSpinner'
 import ErrorAlert from '../components/shared/ErrorAlert'
 import { getCountryName } from '../utils/countryNames'
+import { getCountryCurrency } from '../utils/countryNames'
 
 function InsightsPage() {
   const [country, setCountry] = useState('')
@@ -43,7 +44,8 @@ function InsightsPage() {
 
       <StatCards
         data={data?.salary_by_country}
-        currency="USD"
+        currency={country ? getCountryCurrency(country) : 'USD'}
+        country={country}
       />
 
       <div className="row g-3 mb-4">
