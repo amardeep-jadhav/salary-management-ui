@@ -57,6 +57,12 @@ function EmployeesPage() {
     setSelected(null)
     setShowModal(false)
     setModalError(null)
+    // Ensure body scroll is restored
+    document.body.style.overflow = ''
+    document.body.classList.remove('modal-open')
+    document.body.style.paddingRight = ''
+    const backdrop = document.querySelector('.modal-backdrop')
+    if (backdrop) backdrop.remove()
   }
 
   const handleSubmit = (data) => {
@@ -78,6 +84,15 @@ function EmployeesPage() {
         onError: (err) => setModalError(err.message)
       })
     }
+  }
+
+  const handleCancelDelete = () => {
+    setDeleteTarget(null)
+    document.body.style.overflow = ''
+    document.body.classList.remove('modal-open')
+    document.body.style.paddingRight = ''
+    const backdrop = document.querySelector('.modal-backdrop')
+    if (backdrop) backdrop.remove()
   }
 
   const handleConfirmDelete = (id) => {
@@ -211,7 +226,7 @@ function EmployeesPage() {
 
       {showModal && (
         <EmployeeModal
-          employee={selectedEmployee}
+          employee={showModal ? selectedEmployee : null}
           departments={deptData?.departments}
           jobTitles={titleData?.job_titles}
           onSubmit={handleSubmit}
@@ -224,7 +239,7 @@ function EmployeesPage() {
       <DeleteConfirmModal
         employee={deleteTarget}
         onConfirm={handleConfirmDelete}
-        onCancel={() => setDeleteTarget(null)}
+        onCancel={handleCancelDelete}
         isLoading={deleteEmployee.isPending}
       />
       <ToastContainer toasts={toasts} onClose={removeToast} />

@@ -15,6 +15,12 @@ function DeleteConfirmModal({ employee, onConfirm, onCancel, isLoading }) {
       bsModal.current?.show()
     } else {
       bsModal.current?.hide()
+      // Clean up Bootstrap leftovers
+      document.body.style.overflow = ''
+      document.body.classList.remove('modal-open')
+      document.body.style.paddingRight = ''
+      const backdrop = document.querySelector('.modal-backdrop')
+      if (backdrop) backdrop.remove()
     }
   }, [employee])
 
