@@ -164,3 +164,6 @@ over Tailwind, and Vitest over Jest.
 |----------|-------------|
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Component tree and data flow |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Technical decision log |
+
+## Demo Video
+[Watch the demo on Loom](https://www.loom.com/share/7734f87d3bff4a16a92ab67e970a1b4f)
