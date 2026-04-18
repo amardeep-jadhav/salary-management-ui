@@ -9,6 +9,8 @@ import ErrorAlert from '../components/shared/ErrorAlert'
 import { useDebounce } from '../hooks/useDebounce'
 import { useCountries } from '../hooks/useMeta'
 import { getCountryName } from '../utils/countryNames'
+import ToastContainer from '../components/shared/ToastContainer'
+import { useToast } from '../hooks/useToast'
 
 function EmployeesPage() {
   const [modalError, setModalError] = useState(null)
@@ -20,6 +22,7 @@ function EmployeesPage() {
   const [deleteTarget, setDeleteTarget] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const debouncedSearch = useDebounce(search, 300)
+  const { toasts, showToast, removeToast } = useToast()
 
   const { data, isLoading, isError } = useEmployees({
     page,
@@ -60,12 +63,18 @@ function EmployeesPage() {
     setModalError(null)
     if (data.id) {
       updateEmployee.mutate(data, {
-        onSuccess: () => handleModalClose(),
+        onSuccess: () => {
+          handleModalClose()
+          showToast('Employee updated successfully')
+        },
         onError: (err) => setModalError(err.message)
       })
     } else {
       createEmployee.mutate(data, {
-        onSuccess: () => handleModalClose(),
+        onSuccess: () => {
+          handleModalClose()
+          showToast('Employee added successfully')
+        },
         onError: (err) => setModalError(err.message)
       })
     }
@@ -73,7 +82,13 @@ function EmployeesPage() {
 
   const handleConfirmDelete = (id) => {
     deleteEmployee.mutate(id, {
-      onSuccess: () => setDeleteTarget(null)
+      onSuccess: () => {
+        setDeleteTarget(null)
+        showToast('Employee deleted successfully')
+      },
+      onError: () => {
+        showToast('Failed to delete employee', 'error')
+      }
     })
   }
 
@@ -212,6 +227,7 @@ function EmployeesPage() {
         onCancel={() => setDeleteTarget(null)}
         isLoading={deleteEmployee.isPending}
       />
+      <ToastContainer toasts={toasts} onClose={removeToast} />
     </div>
   )
 }
